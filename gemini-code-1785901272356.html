@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tebak Gambar Cute & Sulit! 🐱🎀🧸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink-soft: #ffe3ec;
+      --pink-medium: #ffb3c6;
+      --pink-dark: #ff758f;
+      --pink-accent: #ff4d6d;
+      --white: #ffffff;
+      --text-color: #5c3d46;
+      --shadow: 0 12px 28px rgba(255, 117, 143, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #fff0f5 0%, #ffe3ec 50%, #ffc2d1 100%);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+      padding: 15px;
+    }
+
+    /* Elemen Hiasan Latar Belakang Melayang */
+    .bg-item {
+      position: absolute;
+      font-size: 2.2rem;
+      opacity: 0.45;
+      animation: float 5s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-18px) rotate(12deg); }
+    }
+
+    /* Kartu Utama Game */
+    .game-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border: 4px solid var(--white);
+      border-radius: 35px;
+      padding: 25px 20px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Header & Judul */
+    .header-tag {
+      display: inline-block;
+      background: var(--pink-soft);
+      color: var(--pink-accent);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      border: 2px solid var(--pink-medium);
+    }
+
+    h1 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--pink-dark);
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 0px var(--white);
+    }
+
+    /* Detail Level & Nyawa */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff5f8;
+      border-radius: 20px;
+      padding: 10px 18px;
+      margin: 15px 0 20px;
+      border: 2px dashed var(--pink-medium);
+    }
+
+    .status-item {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--pink-accent);
+    }
+
+    /* Arena Gambar (Soal Teka-Teki) */
+    .puzzle-box {
+      background: var(--white);
+      border: 3px solid var(--pink-medium);
+      border-radius: 25px;
+      padding: 25px 10px;
+      margin-bottom: 20px;
+      box-shadow: inset 0 4px 10px rgba(255, 179, 198, 0.2);
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .puzzle-emoji {
+      font-size: 3.2rem;
+      letter-spacing: 5px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+
+    .puzzle-clue {
+      font-size: 0.85rem;
+      color: #a07282;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    /* Input & Tombol Aksi */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      border: 3px solid var(--pink-medium);
+      border-radius: 20px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      color: var(--text-color);
+      background: #fff9fa;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--pink-accent);
+      background: var(--white);
+      box-shadow: 0 0 12px rgba(255, 77, 109, 0.3);
+    }
+
+    .btn-submit {
+      background: var(--pink-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 20px;
+      padding: 14px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 6px 0 var(--pink-accent);
+      transition: all 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      background: var(--pink-accent);
+      transform: translateY(-2px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 var(--pink-accent);
+    }
+
+    .btn-hint {
+      background: transparent;
+      border: none;
+      color: #b57a8e;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-top: 15px;
+    }
+
+    /* Feedback Poin & Animasi */
+    .feedback {
+      min-height: 25px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-top: 10px;
+      color: var(--pink-accent);
+    }
+
+    .shake {
+      animation: shakeAnim 0.4s ease-in-out;
+    }
+
+    @keyframes shakeAnim {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+
+    /* Modal Tamat / Game Over */
+    .modal {
+      display: none;
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 35px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 10;
+    }
+
+    .modal h2 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--pink-dark);
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    /* Responsif Layar Kecil */
+    @media (max-width: 380px) {
+      .puzzle-emoji { font-size: 2.5rem; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hiasan Background (Kucing, Boneka, Pita) -->
+  <div class="bg-item" style="top: 8%; left: 6%;">🐱</div>
+  <div class="bg-item" style="top: 12%; right: 8%; animation-delay: 1s;">🎀</div>
+  <div class="bg-item" style="bottom: 10%; left: 10%; animation-delay: 2s;">🧸</div>
+  <div class="bg-item" style="bottom: 15%; right: 6%; animation-delay: 1.5s;">🐱</div>
+  <div class="bg-item" style="top: 50%; left: 4%; animation-delay: 2.5s;">🎀</div>
+
+  <!-- Kartu Utama -->
+  <div class="game-card">
+    <span class="header-tag">Mode Asah Otak 🎀</span>
+    <h1>Tebak Gambar Imut</h1>
+
+    <div class="status-bar">
+      <span class="status-item" id="level-indicator">Soal: 1 / 10</span>
+      <span class="status-item" id="life-indicator">💖 💖 💖</span>
+    </div>
+
+    <div class="puzzle-box" id="puzzle-box">
+      <div class="puzzle-emoji" id="puzzle-emoji">🐱 + 🧱</div>
+      <div class="puzzle-clue" id="puzzle-clue">Petunjuk: Benda rumah tangga</div>
+    </div>
+
+    <form class="input-group" onsubmit="checkAnswer(event)">
+      <input type="text" id="user-answer" placeholder="Ketik jawabanmu di sini..." autocomplete="off">
+      <button type="submit" class="btn-submit">Kirim Jawaban ✨</button>
+    </form>
+
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-hint" onclick="showHint()">💡 Butuh Bantuan Bocoran?</button>
+
+    <!-- Modal Layar Akhir -->
+    <div class="modal" id="game-modal">
+      <span style="font-size: 4rem;" id="modal-icon">🎉</span>
+      <h2 id="modal-title">Luar Biasa!</h2>
+      <p id="modal-desc" style="margin-bottom: 20px; font-weight: 600;">Kamu berhasil menaklukkan semua soal sulit ini!</p>
+      <button class="btn-submit" style="width: 80%;" onclick="restartGame()">Main Lagi 🔄</button>
+    </div>
+  </div>
+
+  <script>
+    // Bank Soal Tebak Gambar (Rebus / Simbol Kata yang Cukup Sulit)
+    const questions = [
+      { emoji: "🐱 + 🧱", clue: "Petunjuk: Hewan + Benda keras (2 kata)", answer: "kucing batu" },
+      { emoji: "🎀 + 👨‍🍳", clue: "Petunjuk: Asesoris + Profesi (1 kata)", answer: "pitak" },
+      { emoji: "🧸 + 🪙", clue: "Petunjuk: Mainan + Alat bayar (2 kata)", answer: "boneka uang" },
+      { emoji: "🦶 + 🛞", clue: "Petunjuk: Anggota tubuh + Benda bundar (2 kata)", answer: "kaki roda" },
+      { emoji: "👁️ + 🍇", clue: "Petunjuk: Panca indera + Buah (2 kata)", answer: "mata anggur" },
+      { emoji: "🐱 + 👓", clue: "Petunjuk: Ungkapan populer (2 kata)", answer: "kucing kacamata" },
+      { emoji: "👑 + 📜", clue: "Petunjuk: Penguasa + Kertas (2 kata)", answer: "raja surat" },
+      { emoji: "🫀 + 🧊", clue: "Petunjuk: Sifat seseorang (2 kata)", answer: "hati dingin" },
+      { emoji: "🪰 + 🚪", clue: "Petunjuk: Serangga + Akses masuk (2 kata)", answer: "lalat pintu" },
+      { emoji: "🎀 + 🌙", clue: "Petunjuk: Pemanis + Benda langit (2 kata)", answer: "pita bulan" }
+    ];
+
+    let currentLevel = 0;
+    let lives = 3;
+
+    function loadQuestion() {
+      const q = questions[currentLevel];
+      document.getElementById('puzzle-emoji').textContent = q.emoji;
+      document.getElementById('puzzle-clue').textContent = q.clue;
+      document.getElementById('level-indicator').textContent = `Soal: ${currentLevel + 1} / ${questions.length}`;
+      document.getElementById('user-answer').value = '';
+      document.getElementById('feedback').textContent = '';
+    }
+
+    function updateLives() {
+      let hearts = '';
+      for (let i = 0; i < lives; i++) {
+        hearts += '💖 ';
+      }
+      for (let i = lives; i < 3; i++) {
+        hearts += '🖤 ';
+      }
+      document.getElementById('life-indicator').textContent = hearts.trim();
+    }
+
+    function checkAnswer(e) {
+      e.preventDefault();
+      const input = document.getElementById('user-answer').value.trim().toLowerCase();
+      const correctAnswer = questions[currentLevel].answer.toLowerCase();
+      const puzzleBox = document.getElementById('puzzle-box');
+
+      if (input === '') return;
+
+      if (input === correctAnswer) {
+        document.getElementById('feedback').textContent = "Hore! Jawabanmu Benar! 🎉✨";
+        document.getElementById('feedback').style.color = "#ff4d6d";
+        
+        setTimeout(() => {
+          currentLevel++;
+          if (currentLevel < questions.length) {
+            loadQuestion();
+          } else {
+            showEndModal(true);
+          }
+        }, 1000);
+      } else {
+        lives--;
+        updateLives();
+        puzzleBox.classList.add('shake');
+        document.getElementById('feedback').textContent = "Tetot! Masih Salah, Coba Lagi! 🐱";
+        document.getElementById('feedback').style.color = "#d90429";
+
+        setTimeout(() => {
+          puzzleBox.classList.remove('shake');
+        }, 400);
+
+        if (lives <= 0) {
+          showEndModal(false);
+        }
+      }
+    }
+
+    function showHint() {
+      const ans = questions[currentLevel].answer;
+      const hintText = `Huruf depan: "${ans.charAt(0).toUpperCase()}" (Total ${ans.length} karakter)`;
+      document.getElementById('feedback').textContent = `💡 ${hintText}`;
+      document.getElementById('feedback').style.color = "#b57a8e";
+    }
+
+    function showEndModal(isWin) {
+      const modal = document.getElementById('game-modal');
+      const icon = document.getElementById('modal-icon');
+      const title = document.getElementById('modal-title');
+      const desc = document.getElementById('modal-desc');
+
+      if (isWin) {
+        icon.textContent = "🧸👑";
+        title.textContent = "Kamu Hebat!";
+        desc.textContent = "Semua teka-teki tebak gambar yang sulit berhasil kamu selesaikan!";
+      } else {
+        icon.textContent = "😿";
+        title.textContent = "Gagal!";
+        desc.textContent = "Kehabisan nyawa... Jangan menyerah, coba lagi yuk!";
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function restartGame() {
+      currentLevel = 0;
+      lives = 3;
+      updateLives();
+      document.getElementById('game-modal').style.display = 'none';
+      loadQuestion();
+    }
+
+    // Inisialisasi Game
+    loadQuestion();
+  </script>
+</body>
+</html>
